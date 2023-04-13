@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "raylib.h" //possibile usare anche le <>
+#include "raylib.h"
 
 int main() {
   InitWindow(320, 320, "Kiriko che boxa il mio pene");
