@@ -1,11 +1,18 @@
 # Beghe assurde - Kiriko SF
 
 Da fare:
-- Lobby
-- Modalità {Allenamento(1P), Soppravivenza(1P), Duello(1P,2P)}  []
-- Texture {Kiriko varie, Nemici(ciambelle...)}                  []
-- Mappe (Soppravivenza -> loop della mappa)                     []
-- Effetti & Suoni & musiche (+orgasmi)                          [AK47Jhonny]
-- Ottimizzazione del codice                                     [RobyRaod]
+- Lobby [gappppp]
+- Modalità : { \
+&nbsp; - Allenamento(1P) [] \
+&nbsp; - Soppravivenza(1P) [] \
+&nbsp; - Duello(1P,2P) [] \
+}
+- Grafica : { \
+&nbsp; - Texture {Kiriko varie, Nemici(ciambelle...)} [Tiramisù] \
+&nbsp; - Mappe (Soppravivenza -> loop della mappa) [AK47JhonnyTV] \
+&nbsp; - Effetti & Suoni & musiche (+orgasmi) [AK47JhonnyTV] \
+}
+
+- Ottimizzazione del codice [RobyRoad]
 
 
