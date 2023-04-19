@@ -1,5 +1,11 @@
 # Beghe assurde - Kiriko SF
 
-- Kiriko che fa i round di rickyrobber
-- Kriko che fighta 1v1 con le ciambelle (test condiviso)
-- Kiriko che fa 1v1 con DrEggMan
+Da fare:
+- Lobby
+- Modalità {Allenamento(1P), Soppravivenza(1P), Duello(1P,2P)}  []
+- Texture {Kiriko varie, Nemici(ciambelle...)}                  []
+- Mappe (Soppravivenza -> loop della mappa)                     []
+- Effetti & Suoni & musiche (+orgasmi)                          [AK47Jhonny]
+- Ottimizzazione del codice                                     [RobyRaod]
+
+
