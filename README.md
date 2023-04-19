@@ -13,6 +13,6 @@ Da fare:
 &nbsp; - Effetti & Suoni & musiche (+orgasmi) [AK47JhonnyTV] \
 }
 
-- Ottimizzazione del codice [RobyRoad piace molto]
+- Ottimizzazione del codice [RobyRoad gli piace molto]
 
 
