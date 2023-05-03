@@ -1,4 +1,4 @@
-# Beghe assurde - Kiriko SF
+# Kiriko SF
 
 Da fare:
 - Lobby [gappppp]
@@ -10,9 +10,5 @@ Da fare:
 - Grafica : { \
 &nbsp; - Texture {Kiriko varie, Nemici(ciambelle...)} [Tiramisù] \
 &nbsp; - Mappe (Soppravivenza -> loop della mappa) [AK47JhonnyTV] \
-&nbsp; - Effetti & Suoni & musiche (+orgasmi) [AK47JhonnyTV] \
+&nbsp; - Effetti & Suoni & musiche [AK47JhonnyTV] \
 }
-
-- Ottimizzazione del codice [RobyRoad gli piace molto]
-
-
