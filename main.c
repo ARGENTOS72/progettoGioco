@@ -3,17 +3,34 @@
 int main() {
 	//enable vsync (before InitWindow) -> better graphic performance
 	SetConfigFlags(FLAG_VSYNC_HINT);
-	//init general
+	//init general -------------------------------------------------------------------
     InitWindow(0,0, "Kiriko and the donuts");//FullScreen
 	ToggleFullscreen();
     screenWidth=GetScreenWidth();//get FullScreen width
     screenHeight=GetScreenHeight();//get FullScreen height
     InitAudioDevice();
     HideCursor();
+    //--------------------------------------------------------------------------------
+    
+    //load var -----------------------------------------------------------------------
+    //img
+	lobbyBg = LoadTexture("img/kiriko-bg.png");
+	trainingFloor = LoadTexture("img/dojo.png");
+	//textures
+	donut = LoadTexture("textures/temp donut.png");
+	kiriko = LoadTexture("textures/temp kiriko.png");
+	mouseTexture = LoadTexture("textures/temp mouse.png");
+	//sound
+	slash = LoadSound("audio/slash.mp3");
+	//music
+	lobbyMusic = LoadMusicStream("audio/temp lobby8bit.mp3");
+	survivalMusic = LoadMusicStream("audio/temp survival8bit.mp3");
+	duelMusic = LoadMusicStream("audio/temp duel8bit.mp3");
+    //--------------------------------------------------------------------------------
 
 	//init var -----------------------------------------------------------------------
 	//sys
-	System sys=(System){1,{75,50,70},0,0};
+	sys=(System){1,{75,50,70},0,0};
 	//pause
 	resumeBtn=(Rectangle){(screenWidth/2)-(MeasureText("resume",subTitleFont)/2)-2,(screenHeight/20)*7+83,MeasureText("resume",subTitleFont),buttonFont};
 	settingsBtn=(Rectangle){(screenWidth/2)-(MeasureText("settings",subTitleFont)/2)-2,(screenHeight/20)*7+143,MeasureText("settings",subTitleFont),buttonFont};
@@ -24,35 +41,21 @@ int main() {
     camera.offset=(Vector2){0,0};
     camera.rotation=0.0f;
     camera.zoom=1.0f;
-    double p_x=0, p_y=0, p_width=49, p_height=80;// temp var for player
-    
-	/*N.B.: tutte i file con "temp" sono provvisori in attesa della grafica finale*/
-	//img
-	Texture2D lobbyBg = LoadTexture("img/kiriko-bg.png");
-	Texture2D trainingFloor = LoadTexture("img/dojo.png");
-	Texture2D no_texture;
-	
-	//textures
-	Texture2D donut = LoadTexture("textures/temp donut.png");
-	Texture2D kiriko = LoadTexture("textures/temp kiriko.png");
-	Texture2D mouseTexture = LoadTexture("textures/temp mouse.png");
-	
+    // temp var for player
+	p_x=0;
+	p_y=0;
+	p_width=49;
+	p_height=80;
 	//sound
-	Sound slash = LoadSound("audio/slash.mp3");
-	//setup sound
-	Sound currentSound=slash;//use currentSound to play all the sound with adjusted volume
+	currentSound=slash;//use currentSound to play all the sound with adjusted volume
 	SetSoundVolume(currentSound, ((float)sys.volume[2]/100)*((float)sys.volume[0]/100));
-	
 	//music
-	Music lobbyMusic = LoadMusicStream("audio/temp lobby8bit.mp3");
-	Music survivalMusic = LoadMusicStream("audio/temp survival8bit.mp3");
-	Music duelMusic = LoadMusicStream("audio/temp duel8bit.mp3");
-	//setup music
-	Music currentMusic = lobbyMusic;//use currentMusic to play all the music with adjusted volume
+	currentMusic = lobbyMusic;//use currentMusic to play all the music with adjusted volume
 	currentMusic.looping=true;
 	SetMusicVolume(currentMusic, ((float)sys.volume[1]/100)*((float)sys.volume[0]/100));
 	PlayMusicStream(currentMusic);
-
+	//--------------------------------------------------------------------------------
+	
 	SetTargetFPS(60);
     while (sys.choice!=lobbyOpt*10) {
     	//general update music
@@ -87,7 +90,7 @@ int main() {
 			else currentMusic=survivalMusic;
 			PlayMusicStream(currentMusic);
 			//reset camera2D
-			camera.target=(Vector2) {0,0};
+			camera.target=(Vector2){0,0};
 			//other setup (player xy).......
 			p_x=0;
 			p_y=0;
@@ -111,16 +114,16 @@ int main() {
 
 				//events
 				if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) {
-					p_y=MAX(-screenHeight,p_y-5);
+					p_y=MAX(-screenHeight,p_y-(200*GetFrameTime()));
 				}
 				if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) {
-					p_y=MIN(screenHeight-p_height,p_y+5);
+					p_y=MIN(screenHeight-p_height,p_y+(200*GetFrameTime()));
 				}
 				if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) {
-					p_x=MIN(screenWidth-p_width,p_x+5);
+					p_x=MIN(screenWidth-p_width,p_x+(200*GetFrameTime()));
 				}
 				if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) {
-					p_x=MAX(-screenWidth,p_x-5);
+					p_x=MAX(-screenWidth,p_x-(200*GetFrameTime()));
 				}
 				if (IsKeyReleased(KEY_ESCAPE)) {
 					sys.pause=sys.choice;
@@ -144,7 +147,7 @@ int main() {
 					}
 				} else {//settings paused
 					currentSound=slash;
-					HandleSettingsEvents(&sys.setting,sys.volume,0,currentMusic,currentSound);
+					HandleSettingsEvents(&sys.setting,0);
 				}
 			}
 			
@@ -170,7 +173,7 @@ int main() {
 					}
 				} else {//settings paused
 					currentSound=slash;
-					HandleSettingsEvents(&sys.setting,sys.volume,0,currentMusic,currentSound);
+					HandleSettingsEvents(&sys.setting,0);
 				}
 			}
 		} else if (sys.choice==31) {//Survival ---------------------------------------
@@ -195,13 +198,13 @@ int main() {
 					}
 				} else {//settings paused
 					currentSound=slash;
-					HandleSettingsEvents(&sys.setting,sys.volume,0,currentMusic,currentSound);
+					HandleSettingsEvents(&sys.setting,0);
 				}
 			}
 		} else if (sys.choice>=40 && sys.choice<=40+settingsOpt) {//Settings ----------
 			//events
 			currentSound=slash;
-			HandleSettingsEvents(&sys.choice,sys.volume,sys.pause,currentMusic,currentSound);
+			HandleSettingsEvents(&sys.choice,sys.pause);
 
 		} else if (sys.choice==51) {//how to play-------------------------------------
 			//events
@@ -231,11 +234,11 @@ int main() {
 			sys.choice=lobbyOpt*10;
 		}
 		
-		BeginDrawing();//Draw --------------------------------------------------------
-			ClearBackground(WHITE);
-			if (sys.choice<10) DrawLobby(sys.choice,lobbyBg);//lobby --- --- ---
+        BeginDrawing();//Draw --------------------------------------------------------
+			ClearBackground(BLACK);
+			if (sys.choice<10) DrawLobby();//lobby --- --- ---
 			else if (sys.choice==11) {//Training --- --- --
-				DrawTraining(camera,trainingFloor,kiriko,mouseTexture,p_x,p_y,sys.pause);
+				DrawTraining(camera);
 				if (sys.setting) DrawSettingsPaused(sys,no_texture);//settings
 				else if (sys.pause) DrawPause(mouseTexture);//pausa
 			}
@@ -249,10 +252,10 @@ int main() {
 				if (sys.setting) DrawSettingsPaused(sys,no_texture);//settings
 				else if (sys.pause) DrawPause(mouseTexture);//pausa
 			}
-			else if (sys.choice>=40 && sys.choice<=40+settingsOpt) DrawSettings(sys.choice,sys.volume,lobbyBg);//Settings
-			else if (sys.choice==51) DrawHowToPlay(camera,lobbyBg);
-			else if (sys.choice==61) DrawCredits(camera,lobbyBg);
-		EndDrawing();
+			else if (sys.choice>=40 && sys.choice<=40+settingsOpt) DrawSettings(sys.choice,lobbyBg);//Settings
+			else if (sys.choice==51) DrawHowToPlay(camera);
+			else if (sys.choice==61) DrawCredits(camera);
+        EndDrawing();
 		
     }
     
